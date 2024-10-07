@@ -1,6 +1,6 @@
 GET http://localhost:7007/api/auth/demo
 ###
-POST http://localhost:7007/api/auth/register
+POST http://localhost:7070/api/auth/register
 
 {
     "username": "admin",
@@ -20,3 +20,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzd
 GET http://localhost:7007/api/protected/admin_demo
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJhZG1pbiIsImV4cCI6MTcyNjc0MjQzMSwicm9sZXMiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.fqrI424ZeAl0hHURlA7QTvrtcr4aQMjam2EPuRT2Syo
 ###
+GET http://localhost:7070/api/poem/populate
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJhZG1pbiIsImV4cCI6MTcyNzk2MjU3Niwicm9sZXMiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.8fF7WciI1QiyoHZt6oXSK10fPjxKYxBEML6-ptXSXZU
+###
+DELETE http://localhost:7070/api/poem/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUaG9tYXMgSGFydG1hbm4iLCJzdWIiOiJhZG1pbiIsImV4cCI6MTcyNzk2MjU3Niwicm9sZXMiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.8fF7WciI1QiyoHZt6oXSK10fPjxKYxBEML6-ptXSXZU
+

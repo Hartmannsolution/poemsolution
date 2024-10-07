@@ -2,11 +2,9 @@ package dk.cphbusiness;
 
 import dk.cphbusiness.rest.ApplicationConfig;
 import dk.cphbusiness.rest.RestRoutes;
-import dk.cphbusiness.security.SecurityRoutes;
-import io.javalin.Javalin;
+import dk.cphbusiness.security.routes.SecurityRoute;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
-import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,7 +12,9 @@ public class Main {
                 .getInstance()
                 .initiateServer()
                 .setRoutes(new RestRoutes().getPoemRoutes()) // A different way to get the EndpointGroup.
-                .startServer(7007)
+                .setRoutes(SecurityRoute.getSecurityRoutes())
+                .checkSecurityRoles()
+                .startServer(7070)
 //                .setCORS()
                 .setGeneralExceptionHandling();
 //            .setErrorHandling()

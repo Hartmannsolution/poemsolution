@@ -6,7 +6,6 @@ import dk.cphbusiness.persistence.HibernateConfig;
 import dk.cphbusiness.persistence.entities.IJPAEntity;
 import dk.cphbusiness.rest.ApplicationConfig;
 import dk.cphbusiness.rest.RestRoutes;
-import dk.cphbusiness.security.SecurityRoutes;
 import io.restassured.RestAssured;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;

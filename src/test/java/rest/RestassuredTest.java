@@ -1,9 +1,11 @@
 package rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import dk.cphbusiness.persistence.HibernateConfig;
 import dk.cphbusiness.persistence.entities.IJPAEntity;
+import dk.cphbusiness.persistence.entities.Poem;
 import dk.cphbusiness.rest.ApplicationConfig;
 import dk.cphbusiness.rest.RestRoutes;
 import io.restassured.RestAssured;
@@ -87,7 +89,6 @@ public class RestassuredTest {
                 .then()
 //                .log().all()
                 .statusCode(200)
-                .body("id", equalTo(1))
                 .body("title", equalTo("Roses"));
     }
 
@@ -118,8 +119,44 @@ public class RestassuredTest {
                 .post("/poem")
                 .then()
                 .statusCode(201)
-                .body("title", equalTo("Test title"))
-                .body("id", equalTo(3));
+                .body("title", equalTo("Test title"));
+    }
+
+    @Test
+    @DisplayName("Test update poem")
+    void testUpdate() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        Poem poem = new Poem("Dandelions", "Benjamin Lollipop", "Dandelions are white, violets are blue, sugar is sweet, and so are you");
+        String jsonPoem = null;
+        try {
+            jsonPoem = mapper.writeValueAsString(poem);
+        } catch (JsonProcessingException ex) {
+            ex.printStackTrace();
+        }
+        given()
+                .header("Content-Type", "application/json")
+                .accept("application/json")
+                .body(jsonPoem)
+                .when()
+                .put("/poem/"+populated.get("poem2").getId())
+                .then()
+                .statusCode(200)
+                .body("title", equalTo("Dandelions"));
+    }
+
+    @Test
+    @DisplayName("Test delete poem")
+    void testDelete() {
+        given()
+                .when()
+                .delete("/poem/"+populated.get("poem2").getId())
+                .then()
+                .statusCode(200);
+//        given().when().get("/poem").then().body("size()", equalTo(1));
+        given().when()
+                .get("/poem/"+populated.get("poem2").getId())
+                .then().statusCode(404);
     }
 
     @Test

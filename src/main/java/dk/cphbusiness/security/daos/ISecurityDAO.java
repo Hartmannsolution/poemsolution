@@ -1,4 +1,4 @@
-package dk.cphbusiness.security;
+package dk.cphbusiness.security.daos;
 import dk.bugelhartmann.UserDTO;
 import dk.cphbusiness.security.entities.User;
 import dk.cphbusiness.security.exceptions.ValidationException;

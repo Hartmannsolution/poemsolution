@@ -27,28 +27,14 @@ public class User implements Serializable, ISecurityUser {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Basic(optional = false)
-    @Column(name = "username", length = 25)
     private String username;
-    @Basic(optional = false)
-    @Column(name = "password")
     private String password;
+
     @JoinTable(name = "user_roles", joinColumns = {
             @JoinColumn(name = "user_name", referencedColumnName = "username")}, inverseJoinColumns = {
             @JoinColumn(name = "role_name", referencedColumnName = "name")})
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
-
-    public Set<String> getRolesAsStrings() {
-        if (roles.isEmpty()) {
-            return null;
-        }
-        Set<String> rolesAsStrings = new HashSet<>();
-        roles.forEach((role) -> {
-            rolesAsStrings.add(role.getRoleName());
-        });
-        return rolesAsStrings;
-    }
 
     public boolean verifyPassword(String pw) {
         return BCrypt.checkpw(pw, this.password);
@@ -58,6 +44,7 @@ public class User implements Serializable, ISecurityUser {
         this.username = userName;
         this.password = BCrypt.hashpw(userPass, BCrypt.gensalt());
     }
+
     public User(String userName, Set<Role> roleEntityList) {
         this.username = userName;
         this.roles = roleEntityList;

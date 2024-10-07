@@ -1,4 +1,4 @@
-package dk.cphbusiness.security;
+package dk.cphbusiness.security.daos;
 
 import dk.bugelhartmann.UserDTO;
 import dk.cphbusiness.exceptions.ApiException;
@@ -7,7 +7,6 @@ import dk.cphbusiness.security.entities.User;
 import dk.cphbusiness.security.exceptions.ValidationException;
 import jakarta.persistence.*;
 
-import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -42,7 +41,7 @@ public class SecurityDAO implements ISecurityDAO {
     }
 
     @Override
-    public User createUser(String username, String password) {
+    public User createUser(String username, String password) throws EntityExistsException {
         try (EntityManager em = getEntityManager()) {
             User userEntity = em.find(User.class, username);
             if (userEntity != null)
@@ -52,14 +51,11 @@ public class SecurityDAO implements ISecurityDAO {
             Role userRole = em.find(Role.class, "user");
             if (userRole == null)
                 userRole = new Role("user");
-                em.persist(userRole);
+            em.persist(userRole);
             userEntity.addRole(userRole);
             em.persist(userEntity);
             em.getTransaction().commit();
             return userEntity;
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new ApiException(400, e.getMessage());
         }
     }
 }
